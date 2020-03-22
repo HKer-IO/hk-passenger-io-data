@@ -98,7 +98,6 @@
   (when (.exists (io/file fname))
     (with-open [rdr (io/reader (io/file fname))]
       (->> rdr
-           io/reader
            line-seq
            last
            (csv/read-csv)
