@@ -1,3 +1,4 @@
+date,control_point,arrive_resident,arrive_mainland,arrive_others,arrive_total,departure_resident,departure_mainland,departure_others,departure_total
 2020-01-25,Airport,14907,8489,10953,34349,58711,5326,7335,71372
 2020-01-25,Express Rail Link West Kowloon,1852,2278,285,4415,8489,2089,224,10802
 2020-01-25,Hung Hom,575,176,67,818,1509,153,53,1715

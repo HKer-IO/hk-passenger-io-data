@@ -1,0 +1,35 @@
+on:
+  schedule:
+    - cron:  '30 2 * * *'
+
+env:
+  JAVA_VERSION: '11.0.5'
+  TOOLS_DEPS_VERSION: '1.10.1.469'
+
+jobs:
+  update-dataset:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/cache@v1
+        id: cache
+        with:
+          path: ~/.m2/
+          key: deps-v2-${{ hashFiles('deps.edn') }}
+      - uses: actions/setup-java@v1
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+      - uses: DeLaGuardo/setup-clojure@2.0
+        with:
+          tools-deps: ${{ env.TOOLS_DEPS_VERSION }}
+      - name: Fetch Data
+        run: clojure -m hk-passenger-io.main
+      - name: Commit files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -m "Fetch Data From https://www.immd.gov.hk/" -a
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
